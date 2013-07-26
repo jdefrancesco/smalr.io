@@ -1,0 +1,13 @@
+# .gitignore = tells git which files it should omit in its tracking.
+
+# Ignore compiled and object python files
+*.pyc
+*.pyo
+
+# Ignore sqlite database file (may alter this)
+*.db
+
+# Packages
+*.egg
+*.egg-info
+*.sublime-project

@@ -1,4 +1,10 @@
 # Django settings for smalr project.
+import os.path
+
+# NOTE: CURRENT BACKEND ADMIN PASSWORD IS "dev" without quotes for user jdefr (REMOVE)
+
+# Enable usage of relative paths.. 
+DPATH = os.path.dirname(os.path.realpath(__file__))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -12,7 +18,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '/Users/jdefr/development/smalr/smalr_io.db', # Or path to database file if using sqlite3.
+        'NAME': '/Users/jdefr/Desktop/smalr/smalr_io.db', # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': '',
         'PASSWORD': '',
