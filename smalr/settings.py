@@ -108,6 +108,7 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+# switched form smalr.urls
 ROOT_URLCONF = 'smalr.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
@@ -130,6 +131,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+    'tagging',
+    'shorts',
 )
 
 # A sample logging configuration. The only tangible logging
