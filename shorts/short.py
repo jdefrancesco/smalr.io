@@ -67,7 +67,7 @@ def base10_to_base62(number):
     """
 
     # We shouldn't get here (sanity check)
-    if not isinstance(number, int):
+    if not isinstance(number, int) and not isinstance(number, long):
         raise NonIntegerError("Supplied parameter was not an integer")
         number = int(number) # Give us an integer
 

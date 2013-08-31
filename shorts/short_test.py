@@ -88,4 +88,5 @@ class From62InvalidInput(unittest.TestCase):
 
     
 if __name__ == '__main__':
+    print(short.value_encode62(18446744073709551615))
     unittest.main()
