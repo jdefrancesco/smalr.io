@@ -11,3 +11,6 @@
 *.egg
 *.egg-info
 *.sublime-project
+
+# Mac file
+.DS_Store
