@@ -1,4 +1,6 @@
 from django.conf.urls import patterns, include, url
+from smalr.views import *
+
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -15,4 +17,7 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
     url(r'^shorts/', include('shorts.urls')),
+    url(r'^shorten/$', shorten),
+    url(r'^(?P<key>\w+)$', redirect),
+    url(r'', index),
 )
