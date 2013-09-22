@@ -1,8 +1,13 @@
 CREATE TABLE urls ( 
 	`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT, //ID of entry - mainly useful for APIs
-	`key` BIGINT UNSIGNED NOT NULL, //integer form of base62 string
-	`deleted` BOOL NOT NULL, //1 - inactive, 0 - active
-	`url` varchar(2000) NOT NULL DEFAULT 'http://smalr.io/',
+    `key` BIGINT UNSIGNED NOT NULL, //integer form of base62 string
+    `status` TINYINT UNSIGNED NOT NULL, //unix-like status code. 0 is valid 1+ is error_code [deletetion, security_error, disabled]
+    `date_submitted` DATETIME NOT NULL,
+    `last_accessed` DATETIME NOT NULL,
+    `hit_count` BIGINT UNSIGNED NOT NULL,
+    `safety_rating` FLOAT(5,2) UNSIGNED NOT NULL,
+    `safety_time` DATETIME NOT NULL,
+    `url` varchar(2000) NOT NULL DEFAULT 'http://smalr.io/',
 	PRIMARY KEY (`id`),
 	UNIQUE INDEX (`key`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
