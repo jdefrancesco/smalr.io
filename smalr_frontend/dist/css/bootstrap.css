@@ -25,6 +25,7 @@ summary {
   display: block;
 }
 
+
 audio,
 canvas,
 video {
@@ -305,6 +306,8 @@ body {
   line-height: 1.428571429;
   color: #333333;
   background-color: #ffffff;
+  background-image: url('../../dark_geometric.png'); 
+  background-repeat: repeat;
 }
 
 input,
@@ -6803,3 +6806,7 @@ td.visible-print {
     display: none !important;
   }
 }
+
+/****************************************** APPEND ANY CUSTOM CHANGES UNDER HERE ******************************************/  
+
+
