@@ -96,7 +96,7 @@ def base62_to_base10(b62_value):
     """
 
     if type(b62_value) is not types.StringType:
-        raise InvalidBase62Value("Parameter should be string")
+        raise InvalidBase62Value("Parameter should be string %s " % (repr(b62_value)))
 
     # Convert digits to a list and then reverse them to calculate integer equiv.
     digit_list = list(b62_value)
