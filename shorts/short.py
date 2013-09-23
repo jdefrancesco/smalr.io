@@ -1,8 +1,16 @@
 #!/usr/bin/env python
-
-# (c) smalr.io
-# Author: Joey DeFrancesco
-# File: baseconv.py (short.py)
+##############################################################################################
+# Author: in70x, Madhax
+# Date:   8/21/2013
+# 
+# Description: shorts module that handles conversion
+# 
+#
+#
+#
+# Last Updated: 9/22/2013
+# Copyright (c) smalr.io
+################################################################################################
 
 import types
 
@@ -39,7 +47,7 @@ def base62_map_integer(char_value):
     elif 'a' <= char_value <= 'z':
         return ord(char_value) - LOWERCASE_OFFSET
     else:
-        raise ValueError("%s is not a valid character!" % char_value)
+        raise ValueError("%s is not a valid character!" % repr(char_value))
 
     # -- EOFunc
 
@@ -56,7 +64,7 @@ def integer_map_base62(int_value):
     elif 36 <= int_value < 62:
         return chr(int_value + LOWERCASE_OFFSET)
     else:
-        return ValueError("%d is not a valid integer [0-61]!", int_value)
+        return ValueError("%s is not a valid integer [0-61]!", repr(int_value))
 
     # -- EOFunc
 
@@ -68,12 +76,12 @@ def base10_to_base62(number):
 
     # We shouldn't get here (sanity check)
     if not isinstance(number, int) and not isinstance(number, long):
-        raise NonIntegerError("Supplied parameter was not an integer")
+        raise NonIntegerError("Supplied parameter was not an integer %s " % repr(number))
         number = int(number) # Give us an integer
 
     # If we have a negative number, raise exception and covert to positive integer
     if number < 0:
-        raise OutOfRangeError("Negative value supplied..")
+        raise OutOfRangeError("Negative value supplied.. %s" % repr(number))
         number = abs(number)
 
     digits = []
@@ -141,13 +149,11 @@ def value_encode62(int_value):
 
 # LinkShortner Class - Creats and manipulates shortlinks..
 class LinkShortner(object):
-
     def __init__(self):
         pass
 
 
 def main():
-
     pass
 
     # -- EOFunc
