@@ -120,15 +120,18 @@ $(document).ready(function(){
 
 
     <div class="container" style="margin-top: 130px">
-      	<!-- Main component -->
-      	
+      	<!-- Container with header, input bar, links and output -->
       	<center>
       	<div class="row" style="width: 700px">  
 
-        		<h1 class="text-left" style="color: #2ECC71">smalr<span style="color: #E7E7E7">.io</span></h1>
-
-		  		<!-- <div class="col-lg-7 col-lg-offset-2" > -->
+        	<h1 class="text-left" style="color: #2ECC71">smalr<span style="color: #E7E7E7">.io</span></h1>
 		
+		    <div class="input-group">
+		      	<input type="text" class="form-control input-lg" placeholder="Copy or type URL to shorten here!" />
+		      	<span class="input-group-btn">
+		        	<button class="btn btn-default input-lg" type="button">smalrize!</button>
+		      	</span>
+		    </div><!-- /input-group -->
 		    		<div class="input-group">
 		      			<input type="text" class="form-control input-lg" id="url_input"> 
 		      				<span class="input-group-btn">
@@ -136,20 +139,46 @@ $(document).ready(function(){
 		      				</span>
 		    		</div><!-- /input-group -->
 
-		  		<!-- </div> .col-lg-6 -->
+		    <!-- Options for a auto-generated link or custom link.. -->
+
 			<div id="shorten-output">
 				
 			</div>
-        	
-  
+		   
+		    <p class="text-right" style="color: #2ECC71;">
+				<label class="radio-inline">
+ 	 				<input type="radio" name="link-choice" id="auto-gen" value="1" checked />auto-generated
+				</label>
+
+				<label class="radio-inline">
+  					<input type="radio" name="link-choice" id="custom" value="2" />custom
+				</label>
+			</p>
+
+			<br />
+			<br />
+
+			<div class="jumbotron">
+				<h4 class="text-left" style="color: #2ECC71;">short-link:</h4>
+				<input type="text" placeholder="Short link will appear here..." class="form-control flat" />
+			</div>
+  		
       	 </div> <!-- /row div -->
       	</center>
-
     </div> <!-- /container -->
+
+
+
 
 
     <!-- Bootstrap core files -->
     <script src="/s/assets/js/jquery.js"></script>
     <script src="/s/dist/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+    	$(document).ready(function() {
+    		$('a').tooltip({placement: 'right'});
+    	});
+    </script>
   </body>
 </html>
