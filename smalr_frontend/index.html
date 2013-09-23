@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -5,22 +6,114 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="assets/ico/favicon.png">
-
+    <link rel="shortcut icon" href="/s/assets/ico/favicon.png">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
     <title>Static Top Navbar Example for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="dist/css/bootstrap.css" rel="stylesheet">
-    <link href="dist/css/flat-ui.css" rel="stylesheet">
+    <link href="/s/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="/s/dist/css/flat-ui.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="navbar-static-top.css" rel="stylesheet">
+    <link href="/s/navbar-static-top.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-      <script src="../../assets/js/html5shiv.js"></script>
-      <script src="../../assets/js/respond.min.js"></script>
+      <script src="/s/assets/js/html5shiv.js"></script>
+      <script src="/s/assets/js/respond.min.js"></script>
     <![endif]-->
+    
+<script type="text/javascript">
+$(document).ajaxSend(function(event, xhr, settings) {
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    function sameOrigin(url) {
+        // url could be relative or scheme relative or absolute
+        var host = document.location.host; // host + port
+        var protocol = document.location.protocol;
+        var sr_origin = '//' + host;
+        var origin = protocol + sr_origin;
+        // Allow absolute or scheme relative URLs to same origin
+        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+            (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+            // or any other URL that isn't scheme relative or absolute i.e relative.
+            !(/^(\/\/|http:|https:).*/.test(url));
+    }
+    function safeMethod(method) {
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+    if (!safeMethod(settings.type) && sameOrigin(settings.url)) {
+        xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+    }
+});
+$(document).ready(function(){
+  $(document).ajaxSend(function(event, xhr, settings) {
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    function sameOrigin(url) {
+        // url could be relative or scheme relative or absolute
+        var host = document.location.host; // host + port
+        var protocol = document.location.protocol;
+        var sr_origin = '//' + host;
+        var origin = protocol + sr_origin;
+        // Allow absolute or scheme relative URLs to same origin
+        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+            (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+            // or any other URL that isn't scheme relative or absolute i.e relative.
+            !(/^(\/\/|http:|https:).*/.test(url));
+    }
+    function safeMethod(method) {
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+    if (!safeMethod(settings.type) && sameOrigin(settings.url)) {
+        xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+    }
+});
+  $(':submit').on('click', function() { 
+      $.ajax({ // ajax call starts
+      	  type: "POST",
+          url: '/0/shorten/', // JQuery loads serverside.php
+          data: { url: $("#url_input").val() }, // Send value of the clicked button
+          dataType: 'json', // Choosing a JSON datatype
+          success: function(data) // Variable data contains the data we get from serverside
+          {
+          	//$('#shorten-output').html(data);
+            $('#shorten-output').html("<br /><br /><div>http://smalr.io/" + data[0][0] + "</div><br /><div>" + data[0][1] + "</div>"); // Clear #wines div
+          },
+      });
+      return false; // keeps the page from not refreshing 
+  });
+});
+</script>
+    
   </head>
 
   <body>
@@ -37,14 +130,16 @@
 		  		<!-- <div class="col-lg-7 col-lg-offset-2" > -->
 		
 		    		<div class="input-group">
-		      			<input type="text" class="form-control input-lg">
+		      			<input type="text" class="form-control input-lg" id="url_input"> 
 		      				<span class="input-group-btn">
-		        				<button class="btn btn-default input-lg" type="button">Shorten!</button>
+		        				<button id="sbutton" class="btn btn-default input-lg" type="submit">Shorten!</button>
 		      				</span>
 		    		</div><!-- /input-group -->
 
 		  		<!-- </div> .col-lg-6 -->
-	
+			<div id="shorten-output">
+				
+			</div>
         	
   
       	 </div> <!-- /row div -->
@@ -54,7 +149,7 @@
 
 
     <!-- Bootstrap core files -->
-    <script src="assets/js/jquery.js"></script>
-    <script src="dist/js/bootstrap.min.js"></script>
+    <script src="/s/assets/js/jquery.js"></script>
+    <script src="/s/dist/js/bootstrap.min.js"></script>
   </body>
 </html>
