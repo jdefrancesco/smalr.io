@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^0/shorten/$', shorten),
     url(r'^0/status/$', status),
+    url(r'^0/delete/(?P<pk>\w+)/$', delete),
     url(r'^(?P<key>\w+)$', redirect),
     url(r'', index),
 )

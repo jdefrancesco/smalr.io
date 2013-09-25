@@ -31,7 +31,7 @@ from shorts.short import *
 
 def shorten(request):
     p = request.POST
-    if p["url"]:
+    if p["url"] and p["url"] != "":
         url = p["url"]
         #@TODO fix custom URL collission
         try: #get next 'dynamic' url
@@ -44,12 +44,26 @@ def shorten(request):
             url_key = 1
             state.objects.create(urls_head=1)
         #insert short URL
-        urls.objects.create(key=url_key, status=0, hit_count=0, safety_rating=0.0, url=url)
+        tmp = urls.objects.create(key=url_key, status=0, hit_count=0, safety_rating=0.0, url=url)
+
         plaintext_url = value_encode62(url_key)  
+        now = datetime.datetime.now()
+        request.session['last'] = now
+        if 'urls' in request.session:
+            request.session['urls'].append(tmp.id)
+        else:
+            request.session['urls'] = []
+            request.session['urls'].append(tmp.id)
+        
         #@TODO get a list of all recent URLs created by this user (via acct_id or session)
     output = []
-    now = datetime.datetime.now()
-    output.append([plaintext_url, url, 0, 0.0, now.strftime("%Y-%m-%d %H:%M")])
+    if 'urls' in request.session:
+        my_urls = urls.objects.in_bulk(request.session['urls'])
+        for pk in request.session['urls']:
+            output.append([my_urls[pk].pk, value_encode62(my_urls[pk].key), str(my_urls[pk].last_accessed), my_urls[pk].hit_count, long(my_urls[pk].safety_rating), my_urls[pk].url])
+        
+    #reverse output
+    output = output[::-1]
     data = json.dumps(output)
     return HttpResponse(data, mimetype='application/json')
 
@@ -60,6 +74,17 @@ def custom_shorten(request):
         pass
     return("")
 
+def delete(request, pk):
+    output = []
+    if 'urls' in request.session:
+        request.session['urls'] =  filter(lambda a: a != int(pk), request.session['urls'])
+        my_urls = urls.objects.in_bulk(request.session['urls'])
+        for pk in request.session['urls']:
+            output.append([my_urls[pk].pk, value_encode62(my_urls[pk].key), str(my_urls[pk].last_accessed), my_urls[pk].hit_count, long(my_urls[pk].safety_rating), my_urls[pk].url])
+    
+    output = output[::-1]
+    data = json.dumps(output)
+    return HttpResponse(data, mimetype='application/json')
 
 #check if custom URL is available, will return  true/false via ajax on keyboard input
 def is_valid_custom(request):
@@ -88,14 +113,11 @@ def redirect(request, key):
         return HttpResponseRedirect("http://smalr.io/")
     return HttpResponseRedirect("")
 
-def main(request):
-    return render_to_response("index.html")
-
 def index(request):
     #@TODO find better placement for template
     c = {}
     c.update(csrf(request))
-    return render_to_response("index.html", c)
+    return render_to_response("index.djt", c)
 
 def register(request):
     return HttpResponseRedirect("")
