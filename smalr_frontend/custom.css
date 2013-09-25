@@ -1,0 +1,97 @@
+body {
+	background: #092e20;
+	color: #FFFFFF;
+	font-family: 'Open Sans', 'Quicksand', 'Verdana';
+	-webkit-font-smoothing: antialiased;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+}
+
+.url_box {
+	background-color: #234f32;
+	border-radius: 4px;
+	border: none;
+	font-size: 16px;
+	min-height: 40px;
+	margin-bottom: 20px;
+	display: block;
+}
+
+.url_output_dest {
+	color: #E7E7E7;
+	text-align: left;
+	font-size: 18px;
+	padding-left: 10px;
+	padding-top: 8px;
+	width: 150px;
+	display: inline-block;
+	float: left;
+}
+
+.url_output_url {
+	display: inline-block;
+	float: left;
+	font-size: 16px;
+	padding: 5px;
+	width: 190px;
+	padding-top: 12px;
+}
+
+.url_output_count { 
+	display: inline-block;
+	float: left;
+	font-size: 12px;
+	padding-top: 15px;
+	width: 50px;
+}
+.url_output_safety {
+	display: inline-block;
+	float: left;
+	font-size: 12px;
+	padding-top: 15px;
+	width: 150px;
+}
+
+.url_output_icon {
+	display: inline-block;
+	float: left;
+	padding-top: 7px;
+	width: 40px;
+}
+
+.form-control {
+	border: 0px;
+}
+
+.logo {
+	display: block;
+	text-align: left;
+	padding-bottom: 2px;
+}
+
+.input-lg {
+	border-radius: 4px;
+	height: 45px;
+	font-size: 17px;
+	line-height: 1.231;
+}
+
+.btn {
+	color: #000000;
+	background: #487858;
+	line-height: 16px;
+	padding: 7px 5px 5px;
+	border-radius: 3px;
+}
+
+.btn:hover {
+	color: #000000;
+	background: #689878;
+}
+
+.btn.btn-default {
+	color: #000000;
+	background: #487858;
+	min-width: 100px;
+	font-size: 20px
+	
+}
