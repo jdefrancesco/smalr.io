@@ -75,6 +75,8 @@ STATIC_URL = '/s/'
 
 
 #SESSION_ENGINE = 'django.contrib.session.backends.db'
+#SESSION_SAVE_EVERY_REQUEST=True
+
 
 # Additional locations of static files
 STATICFILES_DIRS = (

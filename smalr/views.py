@@ -74,6 +74,17 @@ def custom_shorten(request):
         pass
     return("")
 
+def delete(request, pk):
+    output = []
+    if 'urls' in request.session:
+        request.session['urls'] =  filter(lambda a: a != int(pk), request.session['urls'])
+        my_urls = urls.objects.in_bulk(request.session['urls'])
+        for pk in request.session['urls']:
+            output.append([my_urls[pk].pk, value_encode62(my_urls[pk].key), str(my_urls[pk].last_accessed), my_urls[pk].hit_count, long(my_urls[pk].safety_rating), my_urls[pk].url])
+    
+    output = output[::-1]
+    data = json.dumps(output)
+    return HttpResponse(data, mimetype='application/json')
 
 #check if custom URL is available, will return  true/false via ajax on keyboard input
 def is_valid_custom(request):
