@@ -1,4 +1,3 @@
-{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,79 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="/s/assets/ico/favicon.png">
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
+    <link rel="shortcut icon" href="assets/ico/favicon.png">
+
     <title>Static Top Navbar Example for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="/s/dist/css/bootstrap.css" rel="stylesheet">
-    <link href="/s/dist/css/flat-ui.css" rel="stylesheet">
+    <link href="dist/css/bootstrap.css" rel="stylesheet">
+    <link href="dist/css/flat-ui.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="/s/navbar-static-top.css" rel="stylesheet">
+    <link href="navbar-static-top.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-      <script src="/s/assets/js/html5shiv.js"></script>
-      <script src="/s/assets/js/respond.min.js"></script>
+      <script src="../../assets/js/html5shiv.js"></script>
+      <script src="../../assets/js/respond.min.js"></script>
     <![endif]-->
-    
-<script type="text/javascript">
-$(document).ready(function(){
-  $(document).ajaxSend(function(event, xhr, settings) {
-    function getCookie(name) {
-        var cookieValue = null;
-        if (document.cookie && document.cookie != '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = jQuery.trim(cookies[i]);
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-    function sameOrigin(url) {
-        // url could be relative or scheme relative or absolute
-        var host = document.location.host; // host + port
-        var protocol = document.location.protocol;
-        var sr_origin = '//' + host;
-        var origin = protocol + sr_origin;
-        // Allow absolute or scheme relative URLs to same origin
-        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
-            (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
-            // or any other URL that isn't scheme relative or absolute i.e relative.
-            !(/^(\/\/|http:|https:).*/.test(url));
-    }
-    function safeMethod(method) {
-        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-    }
-
-    if (!safeMethod(settings.type) && sameOrigin(settings.url)) {
-        xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-    }
-	});
-  $(':submit').on('click', function() { 
-      $.ajax({ // ajax call starts
-      	  type: "POST",
-          url: '/0/shorten/', // JQuery loads serverside.php
-          data: { url: $("#url_input").val() }, // Send value of the clicked button
-          dataType: 'json', // Choosing a JSON datatype
-          success: function(data) // Variable data contains the data we get from serverside
-          {
-          	$('#url_output').val("http://smalr.io/"+ data[0][0]);
-          	//$('#shorten-output').html(data);
-            //$('#shorten-output').html("<br /><br /><div>http://smalr.io/" + data[0][0] + "</div><br /><div>" + data[0][1] + "</div>"); // Clear #wines div
-          },
-      });
-      return false; // keeps the page from not refreshing 
-  });
-});
-</script>
-    
   </head>
 
   <body>
@@ -89,20 +31,18 @@ $(document).ready(function(){
       	<center>
       	<div class="row" style="width: 700px">  
 
-        	<h1 class="text-left" style="color: #2ECC71">smalr<span style="color: #E7E7E7">.io</span></h1>
+      		<div class="text-left">	
+      			<p><img src="images/slogo.png" /></p>
+        	</div>
 		
 		    <div class="input-group">
-		      	<input type="text" class="form-control input-lg" placeholder="Copy or type URL to shorten here!" id="url_input"/>
+		      	<input type="text" class="form-control input-lg" placeholder="Copy or type URL to shorten here!" />
 		      	<span class="input-group-btn">
-		        	<button class="btn btn-default input-lg" type="submit">smalrize!</button>
+		        	<button class="btn btn-default input-lg" type="button">smalrize!</button>
 		      	</span>
-		    </div>
+		    </div><!-- /input-group -->
 
 		    <!-- Options for a auto-generated link or custom link.. -->
-
-			<div id="shorten-output">
-				
-			</div>
 		   
 		    <p class="text-right" style="color: #2ECC71;">
 				<label class="radio-inline">
@@ -119,7 +59,7 @@ $(document).ready(function(){
 
 			<div class="jumbotron">
 				<h4 class="text-left" style="color: #2ECC71;">short-link:</h4>
-				<input type="text" id="url_output" placeholder="Short link will appear here..." class="form-control flat" />
+				<input type="text" placeholder="Short link will appear here..." class="form-control flat" />
 			</div>
   		
       	 </div> <!-- /row div -->
@@ -131,8 +71,8 @@ $(document).ready(function(){
 
 
     <!-- Bootstrap core files -->
-    <script src="/s/assets/js/jquery.js"></script>
-    <script src="/s/dist/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery.js"></script>
+    <script src="dist/js/bootstrap.min.js"></script>
 
     <script type="text/javascript">
     	$(document).ready(function() {
