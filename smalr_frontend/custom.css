@@ -101,3 +101,16 @@ body {
 	font-size: 20px
 	
 }
+
+.btn.btn-default:hover {
+	background: #689878;
+}
+#footer {
+	padding-top: 80px;
+}
+
+#footer a {
+	color: #ffffff;
+	padding: 35px;
+	font-size: 18px;
+}

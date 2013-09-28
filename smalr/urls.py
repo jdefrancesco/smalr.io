@@ -19,6 +19,8 @@ urlpatterns = patterns('',
     url(r'^0/shorten/$', shorten),
     url(r'^0/status/$', status),
     url(r'^0/delete/(?P<pk>\w+)/$', delete),
+    url(r'^load/c/(?P<n>\w+)/$', create_n_rows),
+    url(r'^load/l/(?P<n>\w+)/$', lookup_n_rows),
     url(r'^(?P<key>\w+)$', redirect),
     url(r'', index),
 )

@@ -34,14 +34,14 @@ function output_session_urls(data) {
 	output = "";
     for(var i = 0; i < data.length; i++) {
     	output += "<div class='url_box'>";
-    	output += "<div class='url_output_dest'>" + $('<a>').prop('href', data[i][5]).prop('hostname') + "</div>";
-        output += "<div class='url_output_url'>http://smalr.io/" + data[i][1] + "</div>";
-        output += "<div class='url_output_count'>" + data[i][3] + " Hits</div>";
-        output += "<div class='url_output_safety'>" + data[i][4] + "/10 Security</div>";
+    	output += "<div class='url_output_dest'>" + $('<a>').prop('href', data[i]['destination_url']).prop('hostname') + "</div>";
+        output += "<div class='url_output_url'>http://smalr.io/" + data[i]['key'] + "</div>";
+        output += "<div class='url_output_count'>" + data[i]['hit_count'] + " Hits</div>";
+        output += "<div class='url_output_safety'>" + data[i]['safety_rating'] + "/10 Security</div>";
         output += "<div class='url_output_icon'><a class='btn btn-small'><i class='icon-copy icon-large'></i></a></div>"
         output += "<div class='url_output_icon'><a class='btn btn-small'><i class='icon-cog icon-large'></i></a></div>"
         output += "<div class='url_output_icon'><a class='btn btn-small'><i class='icon-bar-chart icon-large'></i></a></div>"
-        output += "<div class='url_output_icon'><a onclick=\"delete_url("+data[i][0]+")\" class='btn btn-small'><i class='icon-remove icon-large'></i></a></div>"
+        output += "<div class='url_output_icon'><a onclick=\"delete_url("+data[i]['pk']+")\" class='btn btn-small'><i class='icon-remove icon-large'></i></a></div>"
         output += "</div>";
 	}
     $('#url_output').html(output);
@@ -121,7 +121,7 @@ function delete_url(pk) {
       	<!-- Container with header, input bar, links and output -->
       	<center>
       	<div class="row" style="width: 700px">  
-      		<div class='logo'><img src="/s/logo.png"/> <img src="/s/phonology.png" class='phonology'/></div>
+      		<div class='logo'><img src="/s/logo.png"/> <img src="/s/phonology.png" title="dont wanna be hearing no smallerio" class="phonology"/></div>
 			
 			<form>{% csrf_token %}</form>
 		    <div class="input-group">
@@ -151,9 +151,14 @@ function delete_url(pk) {
 			<br />
 
 			
-				<div id='url_output' class='fancy-table'>		
-				</div>
+			<div id='url_output' class='fancy-table'>		
+			</div>
 			
+			<div id='footer'>
+			<center>
+			<a href='/0/about/'>About</a>&nbsp;<a href='/0/contact/'>Contact</a>&nbsp;<a href='/0/api'>API</a>
+			</center>
+			</div>
   		
       	 </div> <!-- /row div -->
       	</center>

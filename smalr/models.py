@@ -7,7 +7,7 @@
 #
 #
 #
-#
+# Last Updated: 9/26/2013
 # Copyright (c) smalr.io
 ################################################################################################
 
@@ -19,26 +19,33 @@ from django.db import models
 from django.utils import timezone
 
 from tagging.fields import TagField
+from shorts.short import *
 
-class state(models.Model):
+class State(models.Model):
     """
     singleton table keeping dynamic state information
     """
     urls_head = models.PositiveIntegerField(default=0) #ptr to next short url, used to minimize lookup time on next 'random' short URL
 
-
-class urls(models.Model):
+class DestinationUrls(models.Model):
+    """
+    Table for the destination URLs, kept separately and immutable 
+    """
+    url = models.CharField(max_length=2000)
+    
+    
+class ShortUrls(models.Model):
     """
     Table for our short urls
     """
-    key            = models.PositiveIntegerField(default=0, unique=True, db_index=True)
+    key            = models.BigIntegerField(default=0, unique=True, db_index=True)
     status         = models.PositiveIntegerField(default=0) #TBD status codes (deleted/blocked/disabled, etc)
     date_submitted = models.DateTimeField(auto_now_add=True) # Date link was created
     last_accessed  = models.DateTimeField(auto_now=True)     # Update automatically each access of link
-    hit_count      = models.PositiveIntegerField(default=0)  # Hit count of link
+    hit_count      = models.BigIntegerField(default=0)  # Hit count of link
     safety_rating  = models.DecimalField(max_digits=5, decimal_places=2) #safety score, probably will change
     safety_time    = models.DateTimeField(auto_now=True) #date when safety rating was determined. 
-    url            = models.CharField(max_length=2000) #actual URL
+    destination_url = models.ForeignKey(DestinationUrls)
     
     def __unicode__(self):
         pass
@@ -46,6 +53,16 @@ class urls(models.Model):
     # Tell us is link was recently created..self.
     def was_created_recently(self):
         return  self.date_submitted >= timezone.now() - datetime.timedelta(days=1)
+    
+    def dict_output(self):
+        new_dict = dict()
+        new_dict['pk'] = self.pk
+        new_dict['key'] = value_encode62(self.key)
+        new_dict['hit_count'] = self.hit_count
+        new_dict['last_accessed'] = str(self.last_accessed)
+        new_dict['safety_rating'] = long(self.safety_rating)
+        new_dict['destination_url'] = self.destination_url.url
+        return new_dict
 
     def is_secure(self):
         return self.safety_rating > 80
@@ -60,7 +77,7 @@ class urls(models.Model):
         #recalculate security
         return False
     
-class users(models.Model):
+class Users(models.Model):
     login_name    = models.CharField(max_length=32, unique=True, db_index=True)
     password_hash = models.CharField(max_length=40)
     email         = models.CharField(max_length=255, unique=True)
