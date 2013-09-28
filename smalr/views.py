@@ -166,6 +166,9 @@ def create_n_rows(request, n):
 def status():
     #@TODO Finish status pages
     return("")
+
+def infopage(request, key):
+    pass
     
 
 def redirect(request, key):
