@@ -125,7 +125,7 @@ function delete_url(pk) {
 			
 			<form>{% csrf_token %}</form>
 		    <div class="input-group">
-		      	<input type="text" class="form-control input-lg" placeholder="Copy or type URL to shorten here!" id="url_input"/>
+		      	<input type="text" class="form-control input-lg" placeholder="Copy or type URL to shorten here!" name="url" id="url_input"/>
 		      	<span class="input-group-btn">
 		        	<button class="btn btn-default input-lg" type="submit">Smalr</button>
 		      	</span>

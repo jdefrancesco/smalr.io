@@ -31,8 +31,10 @@ from shorts.short import *
 
 def shorten(request):
     p = request.POST
+
     if p["url"] and p["url"] != "":
         url = p["url"]
+
         #@TODO fix custom URL collission
         try: #get next 'dynamic' url
             url_key = state.objects.get(pk=1)
