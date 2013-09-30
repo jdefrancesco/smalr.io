@@ -64,7 +64,6 @@ def shorten(request):
             request.session['urls'] = []
             request.session['urls'].append(tmp.id)
         
-        #@TODO get a list of all recent URLs created by this user (via acct_id or session)
     output = []
     if 'urls' in request.session:
         my_urls = ShortUrls.objects.in_bulk(request.session['urls'])
