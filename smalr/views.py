@@ -167,10 +167,6 @@ def status():
     #@TODO Finish status pages
     return("")
 
-def infopage(request, key):
-    pass
-    
-
 def redirect(request, key):
     key = base62_to_base10(key.encode('ascii'))
     try:
