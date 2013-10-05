@@ -11,12 +11,14 @@
 ###############################################################################################
 
 import os
-import BeautifulSoup
+#import BeautifulSoup
 import requests
 import httplib
 
 # Global Constants
 HTTP_BAD_REQUEST = 400
+HTTP_PREFIX = 'http://'
+HTTPS_PREFIX = 'https://'
 
 # Function to determine if a website is real and online
 def is_page_alive(url):
@@ -34,3 +36,11 @@ def is_page_alive(url):
 # Grabs the title from a website if one exists.
 def grab_page_title():
     pass
+
+
+def url_prefix_check(url):
+
+	if (url[:7] == 'http://') or (url[:8] == 'https://'):
+		return True
+	else:
+		return False

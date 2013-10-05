@@ -15,6 +15,8 @@ import datetime
 import time
 import json
 import random
+import logging
+
 from string import join
 
 from django.contrib.auth.decorators import login_required
@@ -27,15 +29,34 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.core import serializers
+from django.core.validators import URLValidator
+from django.core.exceptions import ValidationError
 
 from smalr.models import *
 from shorts.short import *
+
+from util_functions import url_prefix_check
+from util_functions import HTTP_PREFIX
+
+
 
 def shorten(request):
     p = request.POST
 
     if "url" in p and p["url"] != "":
+
         url = p["url"]
+        # Prepend HTTP prefix if input did not contain it..  (this is needed for redirect)
+        if not url_prefix_check(url):
+            url = HTTP_PREFIX + url
+
+        # Create a URL validator and make sure the URL actually exists..
+        url_validator = URLValidator()
+        try:
+            url_validator(url)
+        except ValidationError, e:
+            print e
+        
 
         #@TODO fix custom URL collission
         try: #get next 'dynamic' url
@@ -174,9 +195,11 @@ def redirect(request, key):
         now = datetime.datetime.now()
         url.last_accessed = now.strftime("%Y-%m-%d %H:%M")
         url.save()
+
         return HttpResponseRedirect(url.destination_url.url)
-    except ObjectDoesNotExist:
+    except ObjectDoesNotExist as e:
         return HttpResponseRedirect("http://smalr.io/")
+   
     return HttpResponseRedirect("")
 
 def index(request):
