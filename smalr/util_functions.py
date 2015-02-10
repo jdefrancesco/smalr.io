@@ -38,6 +38,7 @@ def grab_page_title():
     pass
 
 
+# Detect valid HTTP prefix for links (i.e http or https) 
 def url_prefix_check(url):
 
 	if (url[:7] == 'http://') or (url[:8] == 'https://'):

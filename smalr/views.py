@@ -206,7 +206,7 @@ def index(request):
     #@TODO find better placement for template
     c = {}
     c.update(csrf(request))
-    return render_to_response("index.djt", c)
+    return render_to_response("index.html", c)
 
 def register(request):
     c = {}

@@ -29,42 +29,42 @@
       <script src="/s/assets/js/respond.min.js"></script>
     <![endif]-->
     
-<script type="text/javascript">
-function output_session_urls(data) {
-	output = "";
-    for(var i = 0; i < data.length; i++) {
-    	output += "<div class='url_box'>";
-    	output += "<div class='url_output_dest'>" + $('<a>').prop('href', data[i]['destination_url']).prop('hostname') + "</div>";
-        output += "<div class='url_output_url'>http://smalr.io/" + data[i]['key'] + "</div>";
-        output += "<div class='url_output_count'>" + data[i]['hit_count'] + " Hits</div>";
-        output += "<div class='url_output_safety'>" + data[i]['safety_rating'] + "/10 Security</div>";
-        output += "<div class='url_output_icon'><a class='btn btn-small'><i class='icon-copy icon-large'></i></a></div>"
-        output += "<div class='url_output_icon'><a class='btn btn-small'><i class='icon-cog icon-large'></i></a></div>"
-        output += "<div class='url_output_icon'><a class='btn btn-small'><i class='icon-bar-chart icon-large'></i></a></div>"
-        output += "<div class='url_output_icon'><a onclick=\"delete_url("+data[i]['pk']+")\" class='btn btn-small'><i class='icon-remove icon-large'></i></a></div>"
-        output += "</div>";
-	}
-    $('#url_output').html(output);
-}
+    <script type="text/javascript">
+    function output_session_urls(data) {
+     output = "";
+     for(var i = 0; i < data.length; i++) {
+       output += "<div class='url_box'>";
+       output += "<div class='url_output_dest'>" + $('<a>').prop('href', data[i]['destination_url']).prop('hostname') + "</div>";
+       output += "<div class='url_output_url'>http://smalr.io/" + data[i]['key'] + "</div>";
+       output += "<div class='url_output_count'>" + data[i]['hit_count'] + " Hits</div>";
+       output += "<div class='url_output_safety'>" + data[i]['safety_rating'] + "/10 Security</div>";
+       output += "<div class='url_output_icon'><a class='btn btn-small'><i class='icon-copy icon-large'></i></a></div>"
+       output += "<div class='url_output_icon'><a class='btn btn-small'><i class='icon-cog icon-large'></i></a></div>"
+       output += "<div class='url_output_icon'><a class='btn btn-small'><i class='icon-bar-chart icon-large'></i></a></div>"
+       output += "<div class='url_output_icon'><a onclick=\"delete_url("+data[i]['pk']+")\" class='btn btn-small'><i class='icon-remove icon-large'></i></a></div>"
+       output += "</div>";
+     }
+     $('#url_output').html(output);
+   }
 
-$(document).ready(function(){
-  $(document).ajaxSend(function(event, xhr, settings) {
-    function getCookie(name) {
+   $(document).ready(function(){
+   $(document).ajaxSend(function(event, xhr, settings) {
+      function getCookie(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie != '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = jQuery.trim(cookies[i]);
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
                 // Does this cookie string begin with the name we want?
                 if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
                 }
+              }
             }
-        }
-        return cookieValue;
-    }
-    function sameOrigin(url) {
+            return cookieValue;
+          }
+          function sameOrigin(url) {
         // url could be relative or scheme relative or absolute
         var host = document.location.host; // host + port
         var protocol = document.location.protocol;
@@ -72,43 +72,43 @@ $(document).ready(function(){
         var origin = protocol + sr_origin;
         // Allow absolute or scheme relative URLs to same origin
         return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
-            (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+        (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
             // or any other URL that isn't scheme relative or absolute i.e relative.
             !(/^(\/\/|http:|https:).*/.test(url));
-    }
-    function safeMethod(method) {
-        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-    }
+          }
+          function safeMethod(method) {
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+          }
 
-    if (!safeMethod(settings.type) && sameOrigin(settings.url)) {
-        xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-    }
-	});
-  $(':submit').on('click', function() { 
+          if (!safeMethod(settings.type) && sameOrigin(settings.url)) {
+            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+          }
+        });
+$(':submit').on('click', function() { 
       $.ajax({ // ajax call starts
-      	  type: "POST",
-          url: '/0/shorten/', 
+       type: "POST",
+       url: '/0/shorten/', 
           data: { url: $("#url_input").val() }, // Send value of the clicked button
           dataType: 'json', // Choosing a JSON datatype
           success: function(data) {// Variable data contains the data we get from serverside
           	output_session_urls(data);
           },
-      });
+        });
       return false; // keeps the page from not refreshing 
-  });
-  $(':submit').click();
+    });
+$(':submit').click();
 });
 
 function delete_url(pk) {
 	$.ajax({ // ajax call starts
 		type: "POST",
-        url: '/0/delete/' + pk + '/', 
-        dataType: 'json',
-        success: function(data) { 
-        	output_session_urls(data);
-        }
-        
-       });
+    url: '/0/delete/' + pk + '/', 
+    dataType: 'json',
+    success: function(data) { 
+     output_session_urls(data);
+   }
+
+ });
 }
 
 </script>
