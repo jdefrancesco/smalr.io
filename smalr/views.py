@@ -33,7 +33,7 @@ from shorts.short import *
 
 def shorten(request):
     p = request.POST
-    if "url" in p and p["url"] != "":
+    if "url" in p and p["url"].strip() != "":
         url = ensure_destination_url_http(p["url"])
         try: #get next 'dynamic' url
             url_key = State.objects.get(pk=1)
@@ -107,7 +107,7 @@ def check_custom_form(request):
     
 def create_custom_url(request):
     p = request.POST
-    if 'custom_url_input' in p and p['custom_url_input'] != "" and 'url' in p and p['url'] != "":
+    if 'custom_url_input' in p and p['custom_url_input'] != "" and 'url' in p and p['url'].strip() != "":
         try:
             url = ensure_destination_url_http(p['url'])
             custom_url = base62_to_base10(p['custom_url_input'].encode('ascii'))
