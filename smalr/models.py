@@ -14,7 +14,6 @@
 
 import datetime
 import hashlib
-import urlparse
 
 from django.db import models
 from django.utils import timezone
@@ -62,7 +61,7 @@ class ShortUrls(models.Model):
         new_dict['hit_count'] = self.hit_count
         new_dict['last_accessed'] = str(self.last_accessed)
         new_dict['safety_rating'] = long(self.safety_rating)
-        new_dict['destination_url'] = self.get_external_destination_url()
+        new_dict['destination_url'] = self.destination_url.url
         return new_dict
 
     def is_secure(self):
@@ -77,14 +76,6 @@ class ShortUrls(models.Model):
         #@TODO
         #recalculate security
         return False
-
-    def get_external_destination_url(self):
-        #add http or https to url if it is not there
-        pr = urlparse.urlparse(self.destination_url.url)
-        if pr.scheme == '':
-            pr = pr._replace(scheme='http')
-            return urlparse.urlunparse(pr)
-        return self.destination_url.url
     
 class Users(models.Model):
     login_name    = models.CharField(max_length=32, unique=True, db_index=True)

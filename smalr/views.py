@@ -34,7 +34,7 @@ from shorts.short import *
 def shorten(request):
     p = request.POST
     if "url" in p and p["url"] != "":
-        url = p["url"]
+        url = ensure_destination_url_http(p["url"])
         try: #get next 'dynamic' url
             url_key = State.objects.get(pk=1)
             url_key.urls_head += 1
@@ -109,7 +109,7 @@ def create_custom_url(request):
     p = request.POST
     if 'custom_url_input' in p and p['custom_url_input'] != "" and 'url' in p and p['url'] != "":
         try:
-            url = p['url']        
+            url = ensure_destination_url_http(p['url'])
             custom_url = base62_to_base10(p['custom_url_input'].encode('ascii'))
             check_row = ShortUrls.objects.filter(key=custom_url).exists()
             if check_row == False and custom_url > 0 and custom_url < 9223372036854775805:
@@ -172,7 +172,7 @@ def redirect(request, key):
         now = datetime.datetime.now()
         url.last_accessed = now.strftime("%Y-%m-%d %H:%M")
         url.save()
-        return HttpResponseRedirect(url.get_external_destination_url())
+        return HttpResponseRedirect(url.destination_url.url)
     except ObjectDoesNotExist:
         return HttpResponseRedirect("http://smalr.io/")
     return HttpResponseRedirect("")

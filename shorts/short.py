@@ -13,6 +13,7 @@
 ################################################################################################
 
 import types
+import urlparse
 
 # Base we will use for conversions Ex: 125_base10 = cb_base62
 BASE = 62
@@ -146,6 +147,13 @@ def value_encode62(int_value):
 
     # -- EOFunc
 
+def ensure_destination_url_http(raw_url):
+        #add http or https to url if it is not there
+        pr = urlparse.urlparse(raw_url)
+        if pr.scheme == '':
+            pr = pr._replace(scheme='http')
+            return urlparse.urlunparse(pr)
+        return raw_url
 
 # LinkShortner Class - Creats and manipulates shortlinks..
 class LinkShortner(object):
