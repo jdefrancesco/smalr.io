@@ -172,7 +172,7 @@ def redirect(request, key):
         now = datetime.datetime.now()
         url.last_accessed = now.strftime("%Y-%m-%d %H:%M")
         url.save()
-        return HttpResponseRedirect(url.destination_url.url)
+        return HttpResponseRedirect(url.get_external_destination_url())
     except ObjectDoesNotExist:
         return HttpResponseRedirect("http://smalr.io/")
     return HttpResponseRedirect("")
