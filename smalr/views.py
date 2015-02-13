@@ -42,6 +42,7 @@ from util_functions import HTTP_PREFIX
 
 def shorten(request):
     p = request.POST
+<<<<<<< HEAD
 
     if "url" in p and p["url"] != "":
 
@@ -59,6 +60,10 @@ def shorten(request):
         
 
         #@TODO fix custom URL collission
+=======
+    if "url" in p and p["url"].strip() != "":
+        url = ensure_destination_url_http(p["url"])
+>>>>>>> f31f283bf6bebcb2e23fe1bbe33f0a33ee2fe1c3
         try: #get next 'dynamic' url
             url_key = State.objects.get(pk=1)
             url_key.urls_head += 1
@@ -131,9 +136,9 @@ def check_custom_form(request):
     
 def create_custom_url(request):
     p = request.POST
-    if 'custom_url_input' in p and p['custom_url_input'] != "" and 'url' in p and p['url'] != "":
+    if 'custom_url_input' in p and p['custom_url_input'] != "" and 'url' in p and p['url'].strip() != "":
         try:
-            url = p['url']        
+            url = ensure_destination_url_http(p['url'])
             custom_url = base62_to_base10(p['custom_url_input'].encode('ascii'))
             check_row = ShortUrls.objects.filter(key=custom_url).exists()
             if check_row == False and custom_url > 0 and custom_url < 9223372036854775805:
