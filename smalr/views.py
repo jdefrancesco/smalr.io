@@ -42,7 +42,6 @@ from util_functions import HTTP_PREFIX
 
 def shorten(request):
     p = request.POST
-<<<<<<< HEAD
 
     if "url" in p and p["url"] != "":
 
@@ -60,10 +59,8 @@ def shorten(request):
         
 
         #@TODO fix custom URL collission
-=======
     if "url" in p and p["url"].strip() != "":
         url = ensure_destination_url_http(p["url"])
->>>>>>> f31f283bf6bebcb2e23fe1bbe33f0a33ee2fe1c3
         try: #get next 'dynamic' url
             url_key = State.objects.get(pk=1)
             url_key.urls_head += 1
