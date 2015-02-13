@@ -1,5 +1,5 @@
 ##############################################################################################
-# Author: in70x, Madhax
+# Author: Joey DeFrancesco, Patrick Gryciuk, Samuel Askinas
 # Date:   9/21/2013
 # 
 # Description: smalr.io views file
@@ -7,7 +7,7 @@
 #
 #
 #
-# Last Updated: 9/23/2013
+# Last Updated: 2/13/2015
 # Copyright (c) smalr.io
 ################################################################################################
 
@@ -58,7 +58,7 @@ def shorten(request):
             print e
         
 
-        #@TODO fix custom URL collission
+    #@TODO fix custom URL collission
     if "url" in p and p["url"].strip() != "":
         url = ensure_destination_url_http(p["url"])
         try: #get next 'dynamic' url
