@@ -1,4 +1,4 @@
-# Smalr.io #
+# Smalr.io  -- VERY ROUGH DRAFT OF README#
 
 Django based secure link shortening service. To be hosted on the cloud (which server is to be determined)
 
