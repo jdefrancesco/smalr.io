@@ -43,8 +43,8 @@ from util_functions import HTTP_PREFIX
 def shorten(request):
     p = request.POST
 
-    if "url" in p and p["url"] != "":
-
+    #@TODO fix custom URL collission
+    if "url" in p and p["url"].strip() != "":
         url = p["url"]
         # Prepend HTTP prefix if input did not contain it..  (this is needed for redirect)
         if not url_prefix_check(url):
@@ -56,11 +56,7 @@ def shorten(request):
             url_validator(url)
         except ValidationError, e:
             print e
-        
-
-    #@TODO fix custom URL collission
-    if "url" in p and p["url"].strip() != "":
-        url = ensure_destination_url_http(p["url"])
+			
         try: #get next 'dynamic' url
             url_key = State.objects.get(pk=1)
             url_key.urls_head += 1
@@ -134,8 +130,18 @@ def check_custom_form(request):
 def create_custom_url(request):
     p = request.POST
     if 'custom_url_input' in p and p['custom_url_input'] != "" and 'url' in p and p['url'].strip() != "":
+        url = p["url"]
         try:
-            url = ensure_destination_url_http(p['url'])
+            # Prepend HTTP prefix if input did not contain it..  (this is needed for redirect)
+            if not url_prefix_check(p['url']):
+                url = HTTP_PREFIX + url
+
+            # Create a URL validator and make sure the URL actually exists..
+            url_validator = URLValidator()
+            try:
+                url_validator(url)
+            except ValidationError, e:
+                print e
             custom_url = base62_to_base10(p['custom_url_input'].encode('ascii'))
             check_row = ShortUrls.objects.filter(key=custom_url).exists()
             if check_row == False and custom_url > 0 and custom_url < 9223372036854775805:
