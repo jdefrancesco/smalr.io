@@ -1,4 +1,4 @@
-A dated half-assed project that I MadHax and myself never completed, but at the very leaat I played with Django..
+A dated half-assed project that myself and MadHax never completed, but at the very leaat we got to play with Django.. I would like to actually finish this one day and have it be what I had originally envisioned.. Everey now and again I dabble in the darkside of web-dev.
 
 # Smalr.io  - DRAFT
 
